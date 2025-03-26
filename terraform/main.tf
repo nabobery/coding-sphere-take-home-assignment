@@ -32,9 +32,9 @@ resource "google_project_iam_member" "iam_token_creator" {
   member  = "serviceAccount:${google_service_account.cloud_run_deployer.email}"
 }
 
-resource "google_project_iam_member" "artifact_registry_writer" {
+resource "google_project_iam_member" "artifact_registry_admin" {
   project = var.project_id
-  role    = "roles/artifactregistry.writer"
+  role    = "roles/artifactregistry.admin"
   member  = "serviceAccount:${google_service_account.cloud_run_deployer.email}"
 }
 

@@ -26,22 +26,22 @@ jobs:
         with:
           project_id: ${{ secrets.GCP_PROJECT }}
 
-      - name: Configure Docker for GCR
+      - name: Configure Docker for Artifact Registry
         run: |
-          gcloud auth configure-docker gcr.io
+          gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev --quiet
 
       - name: Build Docker image
         run: |
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT }}/fastapi-jwt-rbac:latest .
+          docker build -t ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/fastapi-jwt-rbac/fastapi-jwt-rbac:latest .
 
-      - name: Push Docker image to Container Registry
+      - name: Push Docker image to Artifact Registry
         run: |
-          docker push gcr.io/${{ secrets.GCP_PROJECT }}/fastapi-jwt-rbac:latest
+          docker push ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/fastapi-jwt-rbac/fastapi-jwt-rbac:latest
 
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy fastapi-jwt-rbac \
-            --image gcr.io/${{ secrets.GCP_PROJECT }}/fastapi-jwt-rbac:latest \
+            --image ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/fastapi-jwt-rbac/fastapi-jwt-rbac:latest \
             --region ${{ secrets.GCP_REGION }} \
             --platform managed \
             --allow-unauthenticated \
