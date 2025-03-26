@@ -30,6 +30,14 @@ jobs:
         run: |
           gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev --quiet
 
+      - name: Create Artifact Registry Repository if Not Exists
+        run: |
+          gcloud artifacts repositories create fastapi-jwt-rbac \
+            --repository-format=docker \
+            --location=${{ secrets.GCP_REGION }} \
+            --project=${{ secrets.GCP_PROJECT }} \
+            --async || echo "Repository already exists or creation failed"
+
       - name: Build Docker image
         run: |
           docker build -t ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/fastapi-jwt-rbac/fastapi-jwt-rbac:latest .
