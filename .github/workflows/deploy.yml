@@ -26,6 +26,10 @@ jobs:
         with:
           project_id: ${{ secrets.GCP_PROJECT }}
 
+      - name: Configure Docker for GCR
+        run: |
+          gcloud auth configure-docker gcr.io
+
       - name: Build Docker image
         run: |
           docker build -t gcr.io/${{ secrets.GCP_PROJECT }}/fastapi-jwt-rbac:latest .
