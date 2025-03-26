@@ -60,7 +60,7 @@ app/
 
    ```bash
    git clone https://github.com/nabobery/coding-sphere-take-home-assignment.git
-   cd ding-sphere-take-home-assignment
+   cd coding-sphere-take-home-assignment
    ```
 
 2. Create and activate a virtual environment:
