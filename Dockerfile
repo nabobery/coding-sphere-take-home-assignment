@@ -3,7 +3,7 @@ WORKDIR /app
 # Install dependencies:
 COPY requirements.txt .
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends postgresql-client libpq-dev && \
+    apt-get install -y --no-install-recommends postgresql-client libpq-dev build-essential && \
     pip install --no-cache-dir -r requirements.txt
 # Copy the application source code.
 COPY . .
